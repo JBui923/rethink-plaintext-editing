@@ -99,8 +99,8 @@ Previewer.propTypes = {
 
 // Uncomment keys to register editors for media types
 const REGISTERED_EDITORS = {
-  // "text/plain": PlaintextEditor,
-  // "text/markdown": MarkdownEditor,
+  "text/plain": PlaintextEditor,
+  "text/markdown": MarkdownEditor,
 };
 
 function PlaintextFilesChallenge() {
@@ -112,10 +112,19 @@ function PlaintextFilesChallenge() {
     setFiles(files);
   }, []);
 
-  const write = file => {
-    console.log('Writing soon... ', file.name);
+  // const write = file => {
+  //   console.log('Writing soon... ', file.name);
 
-    // TODO: Write the file to the `files` array
+  //   // TODO: Write the file to the `files` array
+  // };
+
+  const write = (file, value) => {
+    files.forEach(wfile => {
+      if (wfile.name === file.name) {
+        return (wfile.value = value)
+      }
+    })
+    window.localStorage.setItem(file.name, value);
   };
 
   const Editor = activeFile ? REGISTERED_EDITORS[activeFile.type] : null;
